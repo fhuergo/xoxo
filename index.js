@@ -1,10 +1,14 @@
-//import inquirer from 'inquirer';
-
+import inquirer from 'inquirer';
 import gameReducer, {move} from './game' // game/index.js
 import {createStore} from 'redux'
 
+// Create the store
+const game = createStore(gameReducer);
+
+
 const printBoard = () => {
   const {board} = game.getState()
+
   for (let r = 0; r != 3; ++r) {
     for (let c = 0; c != 3; ++c) {
       process.stdout.write(board.getIn([r, c], '_'))
@@ -25,9 +29,7 @@ const getInput = player => async () => {
   game.dispatch(move(turn, [row, col]))
 }
 
-// Create the store
-const game = createStore(gameReducer);
-console.log('game is', game);
+
 
 // Debug: Print the state
 // game.subscribe(() => console.log(game.getState()))

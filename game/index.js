@@ -1,44 +1,30 @@
-//import {Map} from 'immutable'
-//import React, {Component} from 'react'
+import {Map} from 'immutable'
 
 // state's values: turn and board
 
 // reducer(state, action)
 
-// const move = () => {
-
-// }
-
-// export default class gameReducer extends React.Component {
-//   constructor() {
-//     super();
-//     this.state = {
-//       turn: '',
-//       board: Map
-//     }
-//   }
-//   move(turn, [row, col]) {
-//     console.log(state);
-
-//   return state
-//   }
-
-// }
-
-export default function gameReducer(state, action) {
-  console.log(action)
-  if (action.type === 'MOVE') {
-    if (action.player === 'X') {
-      return { turn: 'O', board: 'temp' };
-      // add the X to the COORDINATES
-      //state.player = "O"
-     } else {
-       // add the O to the COORDINATES
-      return { turn: 'X', board: action.getIn };
-     }
-   // returns new statew ith the move writen to the board
- } else {
-  return 0;
- }
+const move = (turn, rowColumn) => {
+  return {
+    type: 'MOVE',
+    turn: turn,
+    rowColumn: rowColumn
+  }
 }
+
+
+export default function reducer (state = {board: Map()}, action) {
+  if (action.type === 'MOVE') {
+    state.board = state.board.setIn(action.rowColumn, action.turn)
+    if (action.turn === 'X') {
+      action.turn = 'O'
+     } else {
+       action.turn = 'X'
+     }
+     console.log(state)
+  }
+  return state
+}
+
+export {move}
 
