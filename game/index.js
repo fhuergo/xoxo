@@ -1,4 +1,5 @@
 import {Map} from 'immutable'
+import {getInput, game} from '../index';
 
 // state's values: turn and board
 
@@ -9,22 +10,32 @@ const move = (turn, rowColumn) => {
     type: 'MOVE',
     turn: turn,
     rowColumn: rowColumn
-  }
-}
+  };
+};
 
+let gameBoard = Map();
 
-export default function reducer (state = {board: Map()}, action) {
+export default function reducer (state = {board: gameBoard, turn: 'O'}, action) {
   if (action.type === 'MOVE') {
-    state.board = state.board.setIn(action.rowColumn, action.turn)
+    state.board = state.board.setIn(action.rowColumn, action.turn);
     if (action.turn === 'X') {
-      action.turn = 'O'
-     } else {
-       action.turn = 'X'
-     }
-     console.log(state)
+      state.turn = 'O';
+    } else {
+      state.turn = 'X';
+    }
+  } else if (action.type === 'START') {
+    state.board = state.board.setIn([action.rowColumn, action.turn]);
   }
-  return state
+  return state;
 }
 
-export {move}
+const winner = (board) => {
+  console.log('board is', board);
+};
+
+
+winner(gameBoard);
+
+
+export {move};
 
